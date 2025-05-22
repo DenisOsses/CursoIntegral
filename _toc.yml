@@ -1,0 +1,15 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: Cap1
+# - file: Cap2
+# - file: Cap3
+# - file: Cap4
+# - file: Cap5
+# - file: Desafios
+#- file: Clases en Youtube
+# - file: notebooks
+# - file: markdown-notebooks
