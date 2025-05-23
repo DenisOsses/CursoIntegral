@@ -6,6 +6,7 @@ pandas
 seaborn
 sympy
 ipywidgets
+ipympl
 plotly
 myst_nb
 sphinx-exercise

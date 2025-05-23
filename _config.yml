@@ -35,6 +35,7 @@ html:
   use_issues_button: true
   use_repository_button: true
   use_multitoc_numbering: true
+  use_edit_page_button: true
   #home_page_in_navbar: true
   # google_analytics_id: G-TW65QWSB9F
   # analytics:
@@ -55,6 +56,7 @@ launch_buttons:
   #binderhub_url: "https://mybinder.org/v2/gh/DenisOsses/CursoEdo/HEAD"
   thebe: true
   colab_url: "https://colab.research.google.com"
+  notebook_interface: "jupyterlab"
   
 extensions:
     myst_parser: true
@@ -65,5 +67,9 @@ sphinx:
     language: es
     templates_path:
       - _templates
+
+# Habilita widgets
+interactive:
+  enabled: true
  
 
