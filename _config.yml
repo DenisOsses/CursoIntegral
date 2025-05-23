@@ -36,6 +36,11 @@ html:
   use_repository_button: true
   use_multitoc_numbering: true
   use_edit_page_button: true
+  extra_footer: ""
+  extra_navbar: ""
+  comments:
+    hypothesis: false
+    utterances: false
   #home_page_in_navbar: true
   # google_analytics_id: G-TW65QWSB9F
   # analytics:
@@ -53,7 +58,7 @@ parse:
   myst_dmath_double_inline: true
   
 launch_buttons:
-  binderhub_url: "https://mybinder.org/v2/gh/DenisOsses/CursoIntegral/HEAD"
+  binderhub_url: "https://mybinder.org"
   thebe: true
   colab_url: "https://colab.research.google.com"
   notebook_interface: "jupyterlab"
@@ -62,14 +67,30 @@ extensions:
     myst_parser: true
     sphinx_design: true
     
-sphinx:
-  config:
-    language: es
-    templates_path:
-      - _templates
+# sphinx:
+#   config:
+#     language: es
+#     templates_path:
+#       - _templates
 
 # Habilita widgets
 interactive:
   enabled: true
- 
 
+sphinx:
+  config:
+    html_js_files:
+      - https://unpkg.com/thebe@latest/lib/index.js
+    thebe_config:
+      binderOptions:
+        repo: DenisOsses/CursoIntegral  # ← SIN /tree/main ni HEAD
+        ref: main                       # ← Tu rama principal
+        binderUrl: "https://mybinder.org"
+      kernelName: python3
+      path: ""
+    language: es
+    templates_path:
+      - _templates
+
+mystnb:
+  thebe: true

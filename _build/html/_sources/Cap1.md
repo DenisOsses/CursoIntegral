@@ -104,6 +104,75 @@ S_8&=&f\left(\frac{1}{8}\right)\cdot\frac1{8}+f\left(\frac{2}{8}\right)\cdot\fra
 ### Ejercicios
 
 ```{code-cell} ipython3
+:tags: [hide-input]
+
+# Usar ipympl para permitir interactividad en Binder
+%matplotlib ipympl
+
+import numpy as np
+import matplotlib.pyplot as plt
+from ipywidgets import interact, IntSlider, FloatSlider, Dropdown
+from IPython.display import display
+
+functions = {
+    'x^2': lambda x: x**2,
+    'sen(x)': lambda x: np.sin(x),
+    'e^x': lambda x: np.exp(x),
+    'cos(x)': lambda x: np.cos(x)
+}
+
+def plot_riemann_sums(a, b, N, selected_function):
+    f = functions[selected_function]
+    n = 10  # densidad de puntos para la curva suave
+
+    x = np.linspace(a, b, N+1)
+    y = f(x)
+
+    X = np.linspace(a, b, n*N+1)
+    Y = f(X)
+
+    plt.figure(figsize=(15, 5))
+
+    plt.subplot(1, 3, 1)
+    plt.plot(X, Y, 'b')
+    x_left = x[:-1]
+    y_left = y[:-1]
+    plt.plot(x_left, y_left, 'b.', markersize=10)
+    plt.bar(x_left, y_left, width=(b-a)/N, alpha=0.2, align='edge', edgecolor='b')
+    plt.title(f'Left Riemann Sum, N = {N}')
+
+    plt.subplot(1, 3, 2)
+    plt.plot(X, Y, 'b')
+    x_mid = (x[:-1] + x[1:])/2
+    y_mid = f(x_mid)
+    plt.plot(x_mid, y_mid, 'b.', markersize=10)
+    plt.bar(x_mid, y_mid, width=(b-a)/N, alpha=0.2, edgecolor='b')
+    plt.title(f'Midpoint Riemann Sum, N = {N}')
+
+    plt.subplot(1, 3, 3)
+    plt.plot(X, Y, 'b')
+    x_right = x[1:]
+    y_right = y[1:]
+    plt.plot(x_right, y_right, 'b.', markersize=10)
+    plt.bar(x_right, y_right, width=-(b-a)/N, alpha=0.2, align='edge', edgecolor='b')
+    plt.title(f'Right Riemann Sum, N = {N}')
+
+    plt.tight_layout()
+    plt.show()
+
+interact(plot_riemann_sums,
+         a=FloatSlider(min=-10, max=10, step=0.1, value=0, description='a:'),
+         b=FloatSlider(min=-10, max=10, step=0.1, value=5, description='b:'),
+         N=IntSlider(min=1, max=50, step=1, value=10, description='N:'),
+         selected_function=Dropdown(options=functions.keys(), value='x^2', description='Función:')
+);
+```
+
+```{admonition} Ejercicio 
+Sea la función
+```
+
+<!-- ```{code-cell} ipython3
 :tags: [Fun2D]
 :tags: [hide-input]
 :mystnb:
@@ -170,4 +239,4 @@ interact(plot_riemann_sums,
 
 ```{admonition} Ejercicio 
 Sea la función
-```
+``` -->
