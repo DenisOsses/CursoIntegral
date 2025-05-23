@@ -168,5 +168,5 @@ interact(plot_riemann_sums,
 ```
 
 ```{admonition} Ejercicio 
-Sea 
+Sea la función
 ```
