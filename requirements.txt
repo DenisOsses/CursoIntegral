@@ -1,28 +1,40 @@
+# Núcleo para jupyter-book
 jupyter-book
+
+# Visualización y ciencia de datos
 matplotlib
 numpy
 scipy
 pandas
 seaborn
 sympy
+plotly
+
+# Widgets interactivos (soporte completo en Notebook 7)
 ipywidgets
 ipympl
-plotly
+
+# Extensiones de jupyter-book
 myst_nb
 sphinx-exercise
 sphinx-proof
 jupyterquiz
 pydata-sphinx-theme
-docutils==0.18.1
-IPython==8.32.0
-ipykernel==6.29.5
-ipywidgets==8.1.5
+
+# Asegurar compatibilidad con jupyter notebook moderno
+notebook==7.3.2
+jupyterlab==4.3.5
+jupyter_server==2.15.0
 jupyter_client==8.6.3
 jupyter_core==5.7.2
-jupyter_server==2.15.0
-jupyterlab==4.3.5
+ipykernel==6.29.5
+IPython==8.32.0
+traitlets==5.14.3
+
+# NB support
 nbclient==0.10.2
 nbconvert==7.16.6
 nbformat==5.10.4
-notebook==7.3.2
-traitlets==5.14.3
+
+# Para evitar conflictos con sphinx
+docutils==0.18.1
