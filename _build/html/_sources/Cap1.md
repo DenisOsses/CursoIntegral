@@ -105,6 +105,7 @@ S_8&=&f\left(\frac{1}{8}\right)\cdot\frac1{8}+f\left(\frac{2}{8}\right)\cdot\fra
 
 ```{code-cell} ipython3
 :tags: [hide-input]
+:thebe: true
 
 # Usar ipympl para permitir interactividad en Binder
 %matplotlib ipympl
