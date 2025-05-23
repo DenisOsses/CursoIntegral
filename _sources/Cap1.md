@@ -100,7 +100,7 @@ S_8&=&f\left(\frac{1}{8}\right)\cdot\frac1{8}+f\left(\frac{2}{8}\right)\cdot\fra
 
 ¿Por qué solamente elegimos 8 subintervalos? ¿Es posible hacerlo con más, es decir, una cantidad arbitraria $n$ de ellos? La respuesta es que sí y  el procedimiento es completamente análogo a los cálculos anteriores: 
 
-<!-- 
+
 ### Ejercicios
 
 ```{code-cell}
@@ -111,32 +111,62 @@ S_8&=&f\left(\frac{1}{8}\right)\cdot\frac1{8}+f\left(\frac{2}{8}\right)\cdot\fra
 :  code_prompt_hide: "Ocultar el código"
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+from ipywidgets import interact, IntSlider, FloatSlider, Dropdown
+from IPython.display import display
 
-def f(x, y):
-    return 4*x**2 + y**2  # Ejemplo de función
+functions = {
+        'x^2': lambda x: x**2,
+        'sen(x)': lambda x: np.sin(x),
+        'e^x': lambda x: np.exp(x),
+        'cos(x)': lambda x: np.cos(x)
+    }
 
-# Crear una malla de puntos en el espacio XY
-x = np.linspace(-5, 5, 100)
-y = np.linspace(-5, 5, 100)
-X, Y = np.meshgrid(x, y)
-Z = f(X, Y)
+def plot_riemann_sums(a, b, N, selected_function):
+        f = functions[selected_function] # Get the selected function
+        n = 10 # Use n*N+1 points to plot the function smoothly
 
-# Crear la figura y los ejes en 3D
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(111, projection='3d')
+        x = np.linspace(a, b, N+1)
+        y = f(x)
 
-# Graficar la superficie
-ax.plot_surface(X, Y, Z, cmap='viridis', edgecolor='none')
-ax.set_xlabel('x')
-ax.set_ylabel('y')
-ax.set_zlabel('f(x,y)')
-ax.set_title('Gráfica de f(x,y)')
+        X = np.linspace(a, b, n*N+1)
+        Y = f(X)
 
-# Mostrar la gráfica
-plt.show()
+        plt.figure(figsize=(15, 5))
+
+        plt.subplot(1, 3, 1)
+        plt.plot(X, Y, 'b')
+        x_left = x[:-1] # Left endpoints
+        y_left = y[:-1]
+        plt.plot(x_left, y_left, 'b.', markersize=10)
+        plt.bar(x_left, y_left, width=(b-a)/N, alpha=0.2, align='edge', edgecolor='b')
+        plt.title('Left Riemann Sum, N = {}'.format(N))
+
+        plt.subplot(1, 3, 2)
+        plt.plot(X, Y, 'b')
+        x_mid = (x[:-1] + x[1:])/2 # Midpoints
+        y_mid = f(x_mid)
+        plt.plot(x_mid, y_mid, 'b.', markersize=10)
+        plt.bar(x_mid, y_mid, width=(b-a)/N, alpha=0.2, edgecolor='b')
+        plt.title('Midpoint Riemann Sum, N = {}'.format(N))
+
+        plt.subplot(1, 3, 3)
+        plt.plot(X, Y, 'b')
+        x_right = x[1:] # Left endpoints
+        y_right = y[1:]
+        plt.plot(x_right, y_right, 'b.', markersize=10)
+        plt.bar(x_right, y_right, width=-(b-a)/N, alpha=0.2, align='edge', edgecolor='b')
+        plt.title('Right Riemann Sum, N = {}'.format(N))
+
+        plt.show()
+
+interact(plot_riemann_sums,
+             a=FloatSlider(min=-10, max=10, step=0.1, value=0, description='a:'),
+             b=FloatSlider(min=-10, max=10, step=0.1, value=5, description='b:'),
+             N=IntSlider(min=1, max=50, step=1, value=10, description='N:'),
+             selected_function=Dropdown(options=functions.keys(), value='x^2', description='Function:')
+            );
 ```
 
 ```{admonition} Ejercicio 
-Sea $f(x,y)=\sqrt{1-2x^2-4y^2}$. ¿Cuál de las siguientes alternativas ilustra el $Dom(f)$?
-``` -->
+Sea 
+```
