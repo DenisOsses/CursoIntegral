@@ -103,12 +103,13 @@ S_8&=&f\left(\frac{1}{8}\right)\cdot\frac1{8}+f\left(\frac{2}{8}\right)\cdot\fra
 
 ### Ejercicios
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [Fun2D]
 :tags: [hide-input]
 :mystnb:
 :  code_prompt_show: "Mostrar el código fuente"
 :  code_prompt_hide: "Ocultar el código"
+%matplotlib widget
 import numpy as np
 import matplotlib.pyplot as plt
 from ipywidgets import interact, IntSlider, FloatSlider, Dropdown
