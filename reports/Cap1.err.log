@@ -18,126 +18,80 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-%matplotlib widget
+# Activación segura de matplotlib para Thebe
+try:
+    get_ipython().run_line_magic('matplotlib', 'inline')
+except:
+    pass
+
 import numpy as np
 import matplotlib.pyplot as plt
+import ipywidgets as widgets
 from ipywidgets import interact, IntSlider, FloatSlider, Dropdown
 from IPython.display import display
 
 functions = {
-        'x^2': lambda x: x**2,
-        'sen(x)': lambda x: np.sin(x),
-        'e^x': lambda x: np.exp(x),
-        'cos(x)': lambda x: np.cos(x)
-    }
+    'x^2': lambda x: x**2,
+    'sen(x)': lambda x: np.sin(x),
+    'e^x': lambda x: np.exp(x),
+    'cos(x)': lambda x: np.cos(x)
+}
 
 def plot_riemann_sums(a, b, N, selected_function):
-        f = functions[selected_function] # Get the selected function
-        n = 10 # Use n*N+1 points to plot the function smoothly
+    f = functions[selected_function]
+    n = 10  # densidad de puntos para la curva suave
 
-        x = np.linspace(a, b, N+1)
-        y = f(x)
+    x = np.linspace(a, b, N+1)
+    y = f(x)
 
-        X = np.linspace(a, b, n*N+1)
-        Y = f(X)
+    X = np.linspace(a, b, n*N+1)
+    Y = f(X)
 
-        plt.figure(figsize=(15, 5))
+    plt.figure(figsize=(15, 5))
 
-        plt.subplot(1, 3, 1)
-        plt.plot(X, Y, 'b')
-        x_left = x[:-1] # Left endpoints
-        y_left = y[:-1]
-        plt.plot(x_left, y_left, 'b.', markersize=10)
-        plt.bar(x_left, y_left, width=(b-a)/N, alpha=0.2, align='edge', edgecolor='b')
-        plt.title('Left Riemann Sum, N = {}'.format(N))
+    plt.subplot(1, 3, 1)
+    plt.plot(X, Y, 'b')
+    x_left = x[:-1]
+    y_left = y[:-1]
+    plt.plot(x_left, y_left, 'b.', markersize=10)
+    plt.bar(x_left, y_left, width=(b-a)/N, alpha=0.2, align='edge', edgecolor='b')
+    plt.title(f'Left Riemann Sum, N = {N}')
 
-        plt.subplot(1, 3, 2)
-        plt.plot(X, Y, 'b')
-        x_mid = (x[:-1] + x[1:])/2 # Midpoints
-        y_mid = f(x_mid)
-        plt.plot(x_mid, y_mid, 'b.', markersize=10)
-        plt.bar(x_mid, y_mid, width=(b-a)/N, alpha=0.2, edgecolor='b')
-        plt.title('Midpoint Riemann Sum, N = {}'.format(N))
+    plt.subplot(1, 3, 2)
+    plt.plot(X, Y, 'b')
+    x_mid = (x[:-1] + x[1:])/2
+    y_mid = f(x_mid)
+    plt.plot(x_mid, y_mid, 'b.', markersize=10)
+    plt.bar(x_mid, y_mid, width=(b-a)/N, alpha=0.2, edgecolor='b')
+    plt.title(f'Midpoint Riemann Sum, N = {N}')
 
-        plt.subplot(1, 3, 3)
-        plt.plot(X, Y, 'b')
-        x_right = x[1:] # Left endpoints
-        y_right = y[1:]
-        plt.plot(x_right, y_right, 'b.', markersize=10)
-        plt.bar(x_right, y_right, width=-(b-a)/N, alpha=0.2, align='edge', edgecolor='b')
-        plt.title('Right Riemann Sum, N = {}'.format(N))
+    plt.subplot(1, 3, 3)
+    plt.plot(X, Y, 'b')
+    x_right = x[1:]
+    y_right = y[1:]
+    plt.plot(x_right, y_right, 'b.', markersize=10)
+    plt.bar(x_right, y_right, width=-(b-a)/N, alpha=0.2, align='edge', edgecolor='b')
+    plt.title(f'Right Riemann Sum, N = {N}')
 
-        plt.show()
+    plt.tight_layout()
+    plt.show()
 
 interact(plot_riemann_sums,
-             a=FloatSlider(min=-10, max=10, step=0.1, value=0, description='a:'),
-             b=FloatSlider(min=-10, max=10, step=0.1, value=5, description='b:'),
-             N=IntSlider(min=1, max=50, step=1, value=10, description='N:'),
-             selected_function=Dropdown(options=functions.keys(), value='x^2', description='Function:')
-            );
+         a=FloatSlider(min=-10, max=10, step=0.1, value=0, description='a:'),
+         b=FloatSlider(min=-10, max=10, step=0.1, value=5, description='b:'),
+         N=IntSlider(min=1, max=50, step=1, value=10, description='N:'),
+         selected_function=Dropdown(options=functions.keys(), value='x^2', description='Función:')
+);
+
+
+```{admonition} Ejercicio 
+Sea la función
 ------------------
 
 
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mRuntimeError[0m                              Traceback (most recent call last)
-File [1;32m~\AppData\Local\anaconda3\Lib\site-packages\matplotlib\backends\registry.py:413[0m, in [0;36mBackendRegistry.resolve_gui_or_backend[1;34m(self, gui_or_backend)[0m
-[0;32m    412[0m [38;5;28;01mtry[39;00m:
-[1;32m--> 413[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39mresolve_backend(gui_or_backend)
-[0;32m    414[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m:  [38;5;66;03m# KeyError ?[39;00m
+[1;36m  Cell [1;32mIn[1], line 67[1;36m[0m
+[1;33m    ```{admonition} Ejercicio[0m
+[1;37m    ^[0m
+[1;31mSyntaxError[0m[1;31m:[0m invalid syntax
 
-File [1;32m~\AppData\Local\anaconda3\Lib\site-packages\matplotlib\backends\registry.py:375[0m, in [0;36mBackendRegistry.resolve_backend[1;34m(self, backend)[0m
-[0;32m    374[0m [38;5;28;01mif[39;00m gui [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
-[1;32m--> 375[0m     [38;5;28;01mraise[39;00m [38;5;167;01mRuntimeError[39;00m([38;5;124mf[39m[38;5;124m"[39m[38;5;124m'[39m[38;5;132;01m{[39;00mbackend[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m is not a recognised backend name[39m[38;5;124m"[39m)
-[0;32m    377[0m [38;5;28;01mreturn[39;00m backend, gui [38;5;28;01mif[39;00m gui [38;5;241m!=[39m [38;5;124m"[39m[38;5;124mheadless[39m[38;5;124m"[39m [38;5;28;01melse[39;00m [38;5;28;01mNone[39;00m
-
-[1;31mRuntimeError[0m: 'widget' is not a recognised backend name
-
-During handling of the above exception, another exception occurred:
-
-[1;31mRuntimeError[0m                              Traceback (most recent call last)
-Cell [1;32mIn[1], line 1[0m
-[1;32m----> 1[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mmatplotlib[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mwidget[39m[38;5;124m'[39m)
-[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-
-File [1;32m~\AppData\Local\anaconda3\Lib\site-packages\IPython\core\interactiveshell.py:2480[0m, in [0;36mInteractiveShell.run_line_magic[1;34m(self, magic_name, line, _stack_depth)[0m
-[0;32m   2478[0m     kwargs[[38;5;124m'[39m[38;5;124mlocal_ns[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_local_scope(stack_depth)
-[0;32m   2479[0m [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mbuiltin_trap:
-[1;32m-> 2480[0m     result [38;5;241m=[39m fn([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
-[0;32m   2482[0m [38;5;66;03m# The code below prevents the output from being displayed[39;00m
-[0;32m   2483[0m [38;5;66;03m# when using magics with decorator @output_can_be_silenced[39;00m
-[0;32m   2484[0m [38;5;66;03m# when the last Python token in the expression is a ';'.[39;00m
-[0;32m   2485[0m [38;5;28;01mif[39;00m [38;5;28mgetattr[39m(fn, magic[38;5;241m.[39mMAGIC_OUTPUT_CAN_BE_SILENCED, [38;5;28;01mFalse[39;00m):
-
-File [1;32m~\AppData\Local\anaconda3\Lib\site-packages\IPython\core\magics\pylab.py:103[0m, in [0;36mPylabMagics.matplotlib[1;34m(self, line)[0m
-[0;32m     98[0m     [38;5;28mprint[39m(
-[0;32m     99[0m         [38;5;124m"[39m[38;5;124mAvailable matplotlib backends: [39m[38;5;132;01m%s[39;00m[38;5;124m"[39m
-[0;32m    100[0m         [38;5;241m%[39m _list_matplotlib_backends_and_gui_loops()
-[0;32m    101[0m     )
-[0;32m    102[0m [38;5;28;01melse[39;00m:
-[1;32m--> 103[0m     gui, backend [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mshell[38;5;241m.[39menable_matplotlib(args[38;5;241m.[39mgui)
-[0;32m    104[0m     [38;5;28mself[39m[38;5;241m.[39m_show_matplotlib_backend(args[38;5;241m.[39mgui, backend)
-
-File [1;32m~\AppData\Local\anaconda3\Lib\site-packages\IPython\core\interactiveshell.py:3665[0m, in [0;36mInteractiveShell.enable_matplotlib[1;34m(self, gui)[0m
-[0;32m   3662[0m     [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib_inline[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbackend_inline[39;00m
-[0;32m   3664[0m [38;5;28;01mfrom[39;00m [38;5;21;01mIPython[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m [38;5;28;01mimport[39;00m pylabtools [38;5;28;01mas[39;00m pt
-[1;32m-> 3665[0m gui, backend [38;5;241m=[39m pt[38;5;241m.[39mfind_gui_and_backend(gui, [38;5;28mself[39m[38;5;241m.[39mpylab_gui_select)
-[0;32m   3667[0m [38;5;28;01mif[39;00m gui [38;5;241m!=[39m [38;5;28;01mNone[39;00m:
-[0;32m   3668[0m     [38;5;66;03m# If we have our first gui selection, store it[39;00m
-[0;32m   3669[0m     [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mpylab_gui_select [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
-
-File [1;32m~\AppData\Local\anaconda3\Lib\site-packages\IPython\core\pylabtools.py:349[0m, in [0;36mfind_gui_and_backend[1;34m(gui, gui_select)[0m
-[0;32m    347[0m [38;5;28;01melse[39;00m:
-[0;32m    348[0m     gui [38;5;241m=[39m _convert_gui_to_matplotlib(gui)
-[1;32m--> 349[0m     backend, gui [38;5;241m=[39m backend_registry[38;5;241m.[39mresolve_gui_or_backend(gui)
-[0;32m    351[0m gui [38;5;241m=[39m _convert_gui_from_matplotlib(gui)
-[0;32m    352[0m [38;5;28;01mreturn[39;00m gui, backend
-
-File [1;32m~\AppData\Local\anaconda3\Lib\site-packages\matplotlib\backends\registry.py:415[0m, in [0;36mBackendRegistry.resolve_gui_or_backend[1;34m(self, gui_or_backend)[0m
-[0;32m    413[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39mresolve_backend(gui_or_backend)
-[0;32m    414[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m:  [38;5;66;03m# KeyError ?[39;00m
-[1;32m--> 415[0m     [38;5;28;01mraise[39;00m [38;5;167;01mRuntimeError[39;00m(
-[0;32m    416[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124m'[39m[38;5;132;01m{[39;00mgui_or_backend[38;5;132;01m}[39;00m[38;5;124m is not a recognised GUI loop or backend name[39m[38;5;124m"[39m)
-
-[1;31mRuntimeError[0m: 'widget is not a recognised GUI loop or backend name
 
