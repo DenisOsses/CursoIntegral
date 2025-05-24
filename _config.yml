@@ -94,3 +94,6 @@ sphinx:
 
 mystnb:
   thebe: true
+
+thebe:
+  use_thebe_lite: true
