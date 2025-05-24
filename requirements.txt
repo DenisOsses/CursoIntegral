@@ -10,7 +10,7 @@ seaborn
 sympy
 plotly
 
-# Widgets interactivos (soporte completo en Notebook 7)
+# Widgets interactivos
 ipywidgets==8.1.5
 ipympl
 
@@ -21,12 +21,13 @@ sphinx-proof
 jupyterquiz
 pydata-sphinx-theme
 
-# Asegurar compatibilidad con jupyter notebook moderno
-# notebook==7.3.2
+# Evita conflictos en Binder:
+# Usa versiones compatibles entre jupyter_client y notebook
+
 notebook==6.5.6
-jupyterlab==4.3.5
-jupyter_server==2.15.0
-jupyter_client==8.6.3
+jupyterlab==3.6.7           # Última versión compatible con notebook 6
+jupyter_server==1.24.0      # Compatible con notebook 6
+jupyter_client>=7.0,<8
 jupyter_core==5.7.2
 ipykernel==6.29.5
 IPython==8.32.0
